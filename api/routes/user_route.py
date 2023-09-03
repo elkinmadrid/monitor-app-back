@@ -1,6 +1,4 @@
 from flask import Blueprint, request, jsonify, current_app, make_response
-import jwt
-import datetime
 
 from api.services.user_service import UserService
 
@@ -30,14 +28,3 @@ def login_user():
     except Exception as e:
         return make_response(jsonify({'error': e.args[0]}), 500)
 
-def generate_token(public_id):
-
-    payload = {
-        'public_id': public_id,
-        'iat': datetime.datetime.utcnow(),
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=120)
-    }
-
-    token = jwt.encode(payload, current_app.config['SECRET_KEY'])
-
-    return token

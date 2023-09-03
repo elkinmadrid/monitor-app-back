@@ -5,6 +5,9 @@ import os
 
 app = Flask(__name__)
 
+
+app.config['SECRET_KEY'] = os.environ['JWT_SECRETKEY']
+
 # settings
 
 host = os.environ['HOST']
@@ -20,4 +23,3 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 
 app.register_blueprint(users_bp)
-
