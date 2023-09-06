@@ -17,13 +17,20 @@ class UserService:
 
         user_ = User.get_user_by_username(username)
 
+        # Si el usuario no existe debe retornar 404
+
         if not check_password_hash(user_.user_password, password):
             return {
-                'error': 'Invalid password'
+                'error': 'Contraseña invalida.'
             }, 401
 
         token = UserService.generate_token(user_.public_id)
-        return {'token': token}, 200
+        return {
+            'public_id': user_.public_id,
+            'user_type': user_.user_type_fk,
+            'email': user_.user_name,
+            'full_name': user_.person.person_first_name + ' ' + user_.person.person_last_name,
+            'token': token}, 200
 
     def registrar_estudiante(self, data):
 
