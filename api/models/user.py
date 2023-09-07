@@ -1,4 +1,5 @@
 from db import db
+from api.models.user_type import UserType
 
 
 class User(db.Model):
@@ -15,14 +16,16 @@ class User(db.Model):
     person = db.relationship('Person', backref='user_person',
                              single_parent=True, cascade="all,delete-orphan")
 
-    user_type_fk = db.Column(db.Integer, db.ForeignKey("user.user_type_fk"))
+    user_type_fk = db.Column(db.Integer, db.ForeignKey("user_type.user_type_id"))
+    user_type = db.relationship(UserType.__name__, backref='user_type_',
+                             single_parent=True, cascade="all,delete-orphan")
 
-    def __init__(self, id, username, password, user_type, person_id, public_id):
+    def __init__(self, id, username, password, user_type_id, person_id, public_id):
         self.user_id = id
         self.user_name = username
         self.user_password = password
         self.public_id = public_id
-        self.user_type_fk = user_type
+        self.user_type_fk = user_type_id
         self.person_id_fk = person_id
 
     @classmethod

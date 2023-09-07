@@ -27,7 +27,7 @@ class UserService:
         token = UserService.generate_token(user_.public_id)
         return {
             'public_id': user_.public_id,
-            'user_type': user_.user_type_fk,
+            'user_type': user_.user_type.user_type_name,
             'email': user_.user_name,
             'full_name': user_.person.person_first_name + ' ' + user_.person.person_last_name,
             'token': token}, 200
