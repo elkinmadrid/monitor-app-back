@@ -43,7 +43,7 @@ class User(db.Model):
             print('Error al guardar usuario', e)
             return (False, 'Error al guardar usuario')
 
-    @staticmethod
+    @classmethod
     def get_user_by_public_id(self, publicid):
-        _user = User.query.filter(public_id=publicid)
+        _user = User.query.filter_by(public_id=publicid)
         return _user

@@ -21,7 +21,7 @@ def token_required(f):
                 token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
             
             
-            current_user = User.get_user_by_public_id(data["public_id"])
+            current_user = User.get_user_by_public_id(publicid=data["public_id"])
             
             if current_user is None:
                 return {

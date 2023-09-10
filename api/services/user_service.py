@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 class UserService:
 
-    def validate_credentials(self, username, password):
+    def validate_credentials(self, username, password: str):
 
         if not username or not password:
             raise Exception(
@@ -48,11 +48,13 @@ class UserService:
         last_name = data['last_name']
 
         # User
-        password = data['password']
+        password = str(data['password'])
         username = data['username']
 
-        hashed_password = generate_password_hash(
-            data['password'], method='scrypt')
+        hashed_password = generate_password_hash(password, method='sha256')
+
+        # hashed_password = generate_password_hash(
+        #     data['password'], method='scrypt')
         password = hashed_password
 
         person_new = Person(document=document, first_name=first_name,
@@ -60,7 +62,7 @@ class UserService:
 
         public_uuid = str(uuid.uuid4())
         user_new = User(None, username=username,
-                        password=password, user_type=1,
+                        password=password, user_type_id=1,
                         person_id=person_new.person_id,
                         public_id=public_uuid)
 
