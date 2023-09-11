@@ -11,9 +11,9 @@ def signup_user():
 
     try: 
         data = request.get_json()
-        user_service.registrar_estudiante(data)
+        response = user_service.registrar_estudiante(data)
 
-        return jsonify({'message': 'registered successfully'})
+        return make_response(jsonify(response[0]), response[1])
     except Exception as e: 
         return make_response(jsonify({'error': e.args[0]}), 500)
 

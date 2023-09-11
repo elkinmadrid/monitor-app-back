@@ -1,5 +1,6 @@
 from flask import Flask
 from api.routes.user_route import users_bp
+from api.routes.mentorias_route import monitoria_bp
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -23,3 +24,4 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 
 app.register_blueprint(users_bp)
+app.register_blueprint(monitoria_bp)

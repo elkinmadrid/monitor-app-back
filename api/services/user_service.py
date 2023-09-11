@@ -17,6 +17,11 @@ class UserService:
 
         user_ = User.get_user_by_username(username)
 
+        if (not user_):
+            return {
+                'error': 'Usuario no existe.'
+            }, 401
+
         # Si el usuario no existe debe retornar 404
 
         if not check_password_hash(user_.user_password, password):
@@ -68,7 +73,20 @@ class UserService:
 
         user_new.person = person_new
 
-        User.registrar(user_new)
+        isRegister = User.registrar(user_new)
+        if (not isRegister[0]):
+            return {
+                'error': 'Error creando el usuario.'
+            }, 401
+            
+        return {
+            'public_id': user_new.public_id,
+            'user_type': user_new.user_type.user_type_name,
+            'email': user_new.user_name,
+            'full_name': user_new.person.person_first_name + ' ' + user_new.person.person_last_name,
+            'user_id': user_new.user_id
+            }, 201
+        
 
     @staticmethod
     def generate_token(public_id):
