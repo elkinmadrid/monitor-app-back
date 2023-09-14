@@ -36,3 +36,17 @@ class MentoringService():
                 'name': new_mentoring.ment_name,
                 'mentor': f'{new_mentoring.user.person.person_first_name} {new_mentoring.user.person.person_last_name}',
                 'id': new_mentoring.ment_id, }, 200
+
+    def get_all_mentoring_by_user(self, id_user):
+        mentorings = Mentoring.mentorings_by_user(id_user)
+
+        response = []
+
+        for mention in mentorings:
+            response.append({'classroom': mention.ment_classroom,
+                             'schedule': mention.ment_schedules,
+                             'name': mention.ment_name,
+                             'mentor': f'{mention.user.person.person_first_name} {mention.user.person.person_last_name}',
+                             'id': mention.ment_id, })
+
+        return {'mentoring': response}, 200

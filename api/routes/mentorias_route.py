@@ -31,3 +31,15 @@ def create_mentoring(self):
 
     except Exception as e:
         return make_response(jsonify({'error': e.args[0]}), 500)
+
+
+@monitoria_bp.route('/api/mentoring/user/<id>', methods=['GET'])
+@token_required
+def list_monitorias_por_usuario(self, id):
+
+    try:
+        print(id)
+        _mentorings = mentoring_service.get_all_mentoring_by_user(id)
+        return make_response(jsonify(_mentorings[0]), _mentorings[1])
+    except Exception as e:
+        return make_response(jsonify({'error': e.args[0]}), 500)
