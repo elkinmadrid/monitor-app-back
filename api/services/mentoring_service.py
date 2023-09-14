@@ -27,7 +27,7 @@ class MentoringService():
         name_mentoring = data['name']
 
         new_mentoring = Mentoring(
-            classroom=classroom, schedule_id=None, mentor_id=mentor, status=1, schedule=schedule, name=name_mentoring)
+            classroom=classroom, mentor_id=mentor, status=1, schedule=schedule, name=name_mentoring)
 
         Mentoring.create_mentoring(new_mentoring)
 
