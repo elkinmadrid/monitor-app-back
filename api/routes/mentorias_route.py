@@ -43,3 +43,16 @@ def list_monitorias_por_usuario(self, id):
         return make_response(jsonify(_mentorings[0]), _mentorings[1])
     except Exception as e:
         return make_response(jsonify({'error': e.args[0]}), 500)
+
+
+@monitoria_bp.route('/api/mentoring/enroll', methods=['POST'])
+@token_required
+def enroll_student_mentoring():
+    try:
+        body = request.get_json()
+
+        enroll = mentoring_service.enroll_mentoring(body)
+
+        return make_response(jsonify(enroll[0]), enroll[1])
+    except Exception as e:
+        return make_response(jsonify({'error': e.args[0]}), 500)

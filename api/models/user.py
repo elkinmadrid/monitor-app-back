@@ -45,5 +45,5 @@ class User(db.Model):
 
     @classmethod
     def get_user_by_public_id(self, publicid):
-        _user = User.query.filter_by(public_id=publicid)
+        _user = User.query.filter_by(public_id=publicid).first()
         return _user
