@@ -35,8 +35,14 @@ class MentoringService():
         schedule = data['schedule']
         name_mentoring = data['name']
 
+        _user = User.get_user_by_public_id(mentor)
+        if (not _user):
+            return {
+                'error': 'Usuario no existe.'
+            }, 404
+
         new_mentoring = Mentoring(
-            classroom=classroom, mentor_id=mentor, status=1, schedule=schedule, name=name_mentoring)
+            classroom=classroom, mentor_id=_user.user_id, status=1, schedule=schedule, name=name_mentoring)
 
         isRegistered = Mentoring.create_mentoring(new_mentoring)
 
@@ -89,13 +95,13 @@ class MentoringService():
         if (not _user):
             return {
                 'error': 'Usuario no existe.'
-            }, 400
+            }, 404
 
         _ment = Mentoring.mentoring_by_id(id=id_ment)
         if (not _ment):
             return {
                 'error': 'Mentoria no existe.'
-            }, 400
+            }, 404
 
         isRegistered = MentoringUser(id=None, user_id=_user.user_id,
                                      mentoring_id=_ment.ment_id).create_mentoring_user()
